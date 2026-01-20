@@ -9,14 +9,19 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link, NavLink } from 'react-router-dom';
 import { IoMdAdd } from "react-icons/io";
 import Swal from 'sweetalert2'
+import { useContext } from 'react';
+import { DataContex } from '../DataContex/DataProvider';
 
 const HomePage = () => {
 
   // npx json-server --watch db.json --port 5000
 
   // state
-  const [contacts,setContacts] = useState([]);
+  // const [contacts,setContacts] = useState([]);
 
+  const {contacts,setContacts,search,setSearch} = useContext(DataContex);
+
+  console.log(contacts)
 
   // contact delete function
 
@@ -58,9 +63,12 @@ const HomePage = () => {
     // console.log('delete the mentioned contact',id)
   }
 
+  // sort function implement
+
+  
   // data load function 
    useEffect (()=>{
-    fetch('https://696f7ef5a06046ce6186e76f.mockapi.io/contacts/contacts')
+    fetch(`https://696f7ef5a06046ce6186e76f.mockapi.io/contacts/contacts?search=${search}`)
     .then(res=>res.json())
     .then(data=>{
       console.log(data);
@@ -69,9 +77,9 @@ const HomePage = () => {
     
    }
     
-    ,[])
+    ,[setContacts,search])
 
-    console.log(contacts);
+    console.log(contacts,search);
     return (
 <div>
   <main class="py-5">
@@ -84,6 +92,8 @@ const HomePage = () => {
                   <h2>All Contacts</h2>
                   <div class="input-group w-50">
                     <input
+
+                    onKeyUp={(e)=>setSearch(e.target.value)}
                       type="text"
                       class="form-control"
                       placeholder="search contact"
@@ -132,7 +142,7 @@ const HomePage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {contacts.map((contact)=>
+                    {contacts?.map((contact)=>
                     <tr>
                       <td>1</td>
                       <td>{contact?.firstName}</td>
@@ -141,12 +151,12 @@ const HomePage = () => {
                       <td>{contact?.phone}</td>
                       <td>
                         <Link
-                          to={`/contact/${contact.id}`}
+                          to={`/contact/${contact?.id}`}
                           class="btn btn-sm btn-circle btn-outline-info"
                           title="Show"
                           ><FaRegEye className='mx-auto block'  /></Link>
                         <Link
-                          to={`/editContact/${contact.id}`}
+                          to={`/editContact/${contact?.id}`}
                           class="btn btn-sm btn-circle btn-outline-secondary ml-2"
                           title="Edit"
                           ><FaRegEdit className='mx-auto block' />
@@ -155,7 +165,7 @@ const HomePage = () => {
                         <Link
                           class="btn btn-sm btn-circle btn-outline-danger ml-2"
                           title="Delete"
-                          onClick={()=>handleDeleteContact(contact.id)}
+                          onClick={()=>handleDeleteContact(contact?.id)}
                           ><RiDeleteBin2Line className='mx-auto' /></Link>
                       </td>
                       
