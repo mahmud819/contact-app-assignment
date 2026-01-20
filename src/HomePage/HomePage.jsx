@@ -19,9 +19,10 @@ const HomePage = () => {
   // state
   // const [contacts,setContacts] = useState([]);
 
-  const {contacts,setContacts,search,setSearch} = useContext(DataContex);
+  const {contacts,setContacts,search,setSearch,sortValue,
+        setSortValue} = useContext(DataContex);
 
-  console.log(contacts)
+  // console.log(contacts)
 
   // contact delete function
 
@@ -65,7 +66,13 @@ const HomePage = () => {
 
   // sort function implement
 
-  
+  const handleSort =(e)=>{
+
+    const sort = e.target.value;
+    setSortValue(sort);
+    console.log('handle sort function click',sort);
+  }
+
   // data load function 
    useEffect (()=>{
     fetch(`https://696f7ef5a06046ce6186e76f.mockapi.io/contacts/contacts?search=${search}`)
@@ -116,14 +123,19 @@ const HomePage = () => {
               <div
                 class="d-flex align-items-center justify-content-between p-3"
               >
+
+                {/* filter contact */}
+
                 <div class="fs-2">
                   <i class="fa fa-filter text-success"></i> Filter
                 </div>
-                <select class="form-select" aria-label="Default select example">
+
+
+                <select onChange={handleSort} class="form-select" aria-label="Default select example">
                   <option selected>Default</option>
-                  <option value="1">First Name (A → Z)</option>
-                  <option value="2">Last Name (A → Z)</option>
-                  <option value="3">Oldest To First</option>
+                  <option value="firstName">First Name (A → Z)</option>
+                  <option value="lastName">Last Name (A → Z)</option>
+                  <option value="olderToFirst">Oldest To First</option>
                 </select>
               </div>
               <div class="card-body">
@@ -142,7 +154,7 @@ const HomePage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {contacts?.map((contact)=>
+                    {contacts&&contacts?.map((contact)=>
                     <tr>
                       <td>1</td>
                       <td>{contact?.firstName}</td>

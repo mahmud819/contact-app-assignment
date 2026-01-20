@@ -5,14 +5,17 @@ const DataProvider = ({children}) => {
 
     const [contacts, setContacts]=useState([]);
     const [search,setSearch] = useState("");
-    
+    const [sortValue,setSortValue]= useState('');
+
 
     const dataInfo = {
 
         contacts,
         search,
+        sortValue,
         setContacts,
         setSearch,
+        setSortValue
 
     }
     return (

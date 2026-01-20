@@ -19,7 +19,7 @@ const AddContact = () => {
         console.log('contact add function call',contactInfo);
 
         fetch('https://696f7ef5a06046ce6186e76f.mockapi.io/contacts/contacts',{
-            method : 'POST',
+            method :'POST',
             headers: {
                 "Content-Type":"application/json"
             },
@@ -89,8 +89,8 @@ const AddContact = () => {
                     
                     <div class="form-group row mb-0">
                       <div class="col-md-9 offset-md-3">
-                          <Link to={'/'} type="submit" class="btn btn-primary">Save</Link >
-                          <Link to={'/'} class="btn btn-outline-secondary ml-2">Home Page</Link>
+                          <button type="submit" class="btn btn-primary">Save</button >
+                          <Link to={'/'}  class="btn btn-outline-secondary ml-2">Home Page</Link>
                       </div>
                     </div>
                   </form>
